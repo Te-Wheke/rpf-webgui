@@ -1,0 +1,503 @@
+### RPF Local Plugin — Development Plan
+
+Integration targets: SCA · T-Lab · PentestGPT · Raspberry Pi 5 · RF-CSI · RuView
+
+The proposed implementation is a local-first RPF reasoning and investigation plugin, compatible with Claude and designed for integration into your existing sovereign AI infrastructure.
+
+The central architectural decision is to keep RPF independent of any particular model, controller, or investigation domain.
+
+RPF determines whether conclusions are justified. SCA controls execution. T-Lab evaluates models and evidence-processing capabilities. PentestGPT provides authorised cybersecurity investigation workflows.
+
+### Task 01 — Build the local RPF plugin
+
+Objective: Establish a portable RPF plugin that Claude can invoke, while retaining compatibility with SCA and other local model runtimes.
+
+### Architecture
+
+| Component           | Responsibility                                           |
+| ------------------- | -------------------------------------------------------- |
+| RPF Core            | Dependency evaluation and reasoning validation           |
+| Domain Registry     | Domain-specific evaluation rules                         |
+| Operator Engine     | Recursive WHAT, HOW, WHEN, WHY, WHERE, WHO interrogation |
+| Claim Engine        | Claim characterisation, decomposition and validation     |
+| Evidence Engine     | Provenance, authority, uncertainty and contradictions    |
+| ReverseRPF          | Trace conclusions backwards to their dependencies        |
+| Experience Registry | Associate observations with contextual experience data   |
+| Stewardship Engine  | Determine which actions the evidence justifies           |
+| Plugin Adapter      | Expose RPF capabilities to Claude and SCA                |
+| Presentation Layer  | Render investigations through configurable JSON and CSS  |
+
+### Integration boundaries
+
+SCA — Sovereign Controller Agent
+
+SCA remains the sole orchestration authority. The RPF plugin can analyse claims, request evidence and return structured recommendations, but cannot independently command agents, access tools or execute system operations.
+
+T-Lab — Training Laboratory
+
+T-Lab provides model inspection, evaluation, benchmarking and controlled experimentation. RPF can assess the quality of T-Lab findings without assuming control of the laboratory.
+
+PentestGPT
+
+PentestGPT can use RPF to evaluate security findings, investigate competing explanations and distinguish verified vulnerabilities from hypotheses.
+
+Raspberry Pi 5
+
+The Pi provides a physical observation source through authorised network monitoring and RF-CSI acquisition.
+
+The important distinction is that sensor observations are evidence inputs, not automatically established facts about the physical world.
+
+### Claude compatibility
+
+Claude's skill convention uses `SKILL.md` (singular), not `SKILLS.md`, for skill discovery. A `SKILLS.md` file can additionally be maintained as project documentation, but it should not be treated as the executable entry point.
+
+The proposed plugin will therefore contain both:
+
+* `SKILL.md` — Claude-compatible skill instructions and invocation contract.
+
+* `SKILLS.md` — project-level skill catalogue, permissions and capability documentation.
+
+The plugin should expose the same RPF engine through separate Claude and SCA adapters, avoiding duplicated reasoning implementations.
+
+### Task 02 — Review and formalise the RPF core
+
+### 2.1 Domain registry
+
+Your proposed domains should be extensible rather than hardcoded into the reasoning engine.
+
+| Domain       | Primary evaluation requirements                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| Science      | Empirical observations, reproducibility, falsifiability                             |
+| Mathematics  | Formal definitions, axioms, proofs                                                  |
+| Legal        | Jurisdiction, legislation, precedent, authority                                     |
+| Medical      | Clinical evidence, uncertainty, risk                                                |
+| Political    | Institutions, competing claims, source independence                                 |
+| Cultural     | Context, tikanga, provenance, appropriate authority                                 |
+| Historical   | Primary sources, chronology, corroboration                                          |
+| Astrological | Interpretive tradition, internal consistency, empirical validation where applicable |
+| Chemistry    | Chemical identity, measurements, experimental conditions                            |
+
+A domain should determine how evidence is assessed, not predetermine which conclusions are acceptable.
+
+For example, an astrological claim can be evaluated for consistency with a particular astrological tradition. That does not establish empirical predictive accuracy. The claim type and evidence standard must remain explicit.
+
+Cybersecurity, engineering, philosophy and religion can be added as domain modules without modifying the RPF core.
+
+### 2.2 Operators
+
+The six operators should function recursively at every dependency stage.
+
+| Operator | Investigation function                                          |
+| -------- | --------------------------------------------------------------- |
+| WHAT     | Identify the object, event, phenomenon or proposition           |
+| HOW      | Establish mechanism, process or method                          |
+| WHEN     | Establish temporal context, sequence and validity               |
+| WHY      | Investigate causal explanations and justification               |
+| WHERE    | Establish location, scope, environment or jurisdiction          |
+| WHO      | Identify actors, observers, authorities and responsible parties |
+
+Not every operator must produce an answer. An unanswered operator should generate an explicit unknown rather than a fabricated explanation.
+
+### 2.3 Dependency chain
+
+There is one important correction to your proposed ordering.
+
+Your established RPF dependency chain is:
+
+Reality → Observation → Experience → Understanding → Language / Representation → Knowledge → Wisdom → Stewardship
+
+In the latest request, you placed Knowledge and Wisdom before Language.
+
+I recommend retaining Language / Representation before Knowledge, because RPF needs a defined means of expressing and evaluating propositions before admitting them as justified knowledge.
+
+However, this should be treated as a framework design decision, not as proof that all human cognition requires language.
+
+Each transition requires a justification record.
+
+| Stage         | Required output                                     |
+| ------------- | --------------------------------------------------- |
+| Reality       | Defined target phenomenon or system                 |
+| Observation   | Recorded measurements or observations               |
+| Experience    | Contextualised observations and interactions        |
+| Understanding | Proposed interpretation or mechanism                |
+| Language      | Explicit representation of the interpretation       |
+| Knowledge     | Justified and appropriately bounded claims          |
+| Wisdom        | Assessment of implications and competing priorities |
+| Stewardship   | Justified decision, investigation or non-action     |
+
+The implementation should permit a stage to remain unresolved. It must never fill a dependency gap merely to complete the chain.
+
+### 2.4 What constitutes a claim?
+
+Within RPF, I propose the following formal definition:
+
+A claim is an identifiable proposition asserting that something is, was, will be, occurs, or relates to something else in a particular way, and whose justification can be investigated.
+
+A claim does not become true because it was expressed by a human, AI model, sensor or trusted authority.
+
+For example:
+
+> The Raspberry Pi detected a person moving behind a wall using Wi-Fi CSI.
+
+That is a compound claim.
+
+RPF should decompose it:
+
+* The Raspberry Pi produced CSI measurements.
+
+* Those measurements contained measurable changes.
+
+* The changes were associated with physical movement.
+
+* The movement was caused by a person.
+
+* The person was located behind a wall.
+
+Each proposition requires independent justification.
+
+Even if the first two propositions are verified, that does not establish the remaining three.
+
+Claim determination therefore requires two distinct operations:
+
+* Claim identification: Determine whether a statement contains a proposition that can be investigated.
+
+* Claim evaluation: Determine whether available evidence justifies accepting, rejecting or withholding judgement about that proposition.
+
+Recommended claim states:
+
+| State               | Meaning                                                             |
+| ------------------- | ------------------------------------------------------------------- |
+| PROPOSED            | Proposition identified but not evaluated                            |
+| UNDER_INVESTIGATION | Dependencies and evidence being examined                            |
+| SUPPORTED           | Evidence supports the proposition within defined limits             |
+| CONTRADICTED        | Evidence materially conflicts with the proposition                  |
+| INDETERMINATE       | Available evidence cannot resolve the proposition                   |
+| INVALID             | Proposition is malformed or unsuitable for the specified evaluation |
+| SUPERSEDED          | Replaced by a newer version or revised proposition                  |
+
+The original claim, evidence and evaluation history should remain available for audit.
+
+### 2.5 ReverseRPF
+
+ReverseRPF should operate as a dependency-tracing engine.
+
+Example:
+
+Proposed conclusion: A particular RF signal indicates human occupancy.
+
+Reverse propagation:
+
+Stewardship decision ↓ Evidence required to justify that decision ↓ Knowledge supporting occupancy classification ↓ Representation and classification assumptions ↓ Understanding of CSI signal behaviour ↓ Experience from calibration experiments ↓ Recorded CSI observations ↓ Physical environment and measurement conditions
+
+ReverseRPF must identify the earliest unsupported dependency.
+
+That dependency becomes the next investigation target.
+
+This prevents a convincing model-generated explanation from being mistaken for a verified physical observation.
+
+### 2.6 Data, memory and experience
+
+Your proposed connection between memory, vision, emotion, sound and experience is worth formalising.
+
+I recommend treating these as associated data modalities, not as interchangeable forms of evidence.
+
+An experience record could contain:
+
+| Field          | Purpose                                                   |
+| -------------- | --------------------------------------------------------- |
+| Experience ID  | Stable reference                                          |
+| Timestamp      | When the experience occurred                              |
+| Observer       | Human, model, device or sensor                            |
+| Vision         | Images, video or derived visual observations              |
+| Sound          | Audio, acoustic measurements or transcription             |
+| Emotion        | Reported affective state or explicitly labelled inference |
+| Environment    | Physical and operational context                          |
+| Interpretation | Meaning attributed to the experience                      |
+| Confidence     | Confidence in the interpretation                          |
+| Provenance     | Origin and transformation history                         |
+| Related claims | Claims associated with the experience                     |
+
+For example, a microphone recording is an observation. A transcription is a derived representation. An AI interpretation that the speaker sounds frightened is an inference, not a direct measurement of emotion.
+
+RPF should preserve these distinctions.
+
+Likewise, an LLM's context window, stored memory, training parameters and a human's autobiographical memory are different mechanisms. The architecture should not assume they function identically.
+
+### Task 03 — Design `custom.json` and `styles.css`
+
+The implementation should separate configuration, presentation and reasoning logic.
+
+`custom.json` defines how the RPF plugin is configured and displayed. `styles.css` defines the visual presentation.
+
+Neither file should contain the actual reasoning engine.
+
+### 3.1 Proposed plugin directory
+
+```text
+rpf-local-plugin/
+│
+├── .claude-plugin/
+│   └── plugin.json
+│
+├── skills/
+│   └── rpf-investigate/
+│       └── SKILL.md
+│
+├── SKILLS.md
+├── README.md
+│
+├── config/
+│   ├── custom.json
+│   ├── domains.json
+│   ├── operators.json
+│   └── policies.json
+│
+├── core/
+│   ├── claims/
+│   ├── dependencies/
+│   ├── evidence/
+│   ├── experience/
+│   ├── forward/
+│   ├── reverse/
+│   └── stewardship/
+│
+├── adapters/
+│   ├── claude/
+│   ├── sca/
+│   ├── tlab/
+│   ├── pentestgpt/
+│   └── rf_csi/
+│
+├── ui/
+│   ├── index.html
+│   ├── styles.css
+│   └── components/
+│
+├── schemas/
+├── tests/
+└── evidence/
+```
+
+This is a proposed project structure, not an assertion that these directories already exist.
+
+The Claude plugin manifest and skill entry point should be validated against the installed Claude version before implementation.
+
+### 3.2 `custom.json` configuration specification
+
+The configuration should contain the following sections.
+
+| Section      | Configuration                                           |
+| ------------ | ------------------------------------------------------- |
+| plugin       | Name, version, schema version, compatibility            |
+| runtime      | Local execution, offline policy, resource limits        |
+| rpf          | Core stages, evaluation policy, propagation modes       |
+| domains      | Enabled domains and domain-specific evidence rules      |
+| operators    | Six interrogation operators and recursion limits        |
+| claims       | Claim states, decomposition and validation requirements |
+| evidence     | Provenance, integrity, timestamps, contradictions       |
+| experience   | Vision, audio, emotion and contextual associations      |
+| integrations | Claude, SCA, T-Lab, PentestGPT and CSI adapters         |
+| permissions  | Read, write, execute and network authorisation          |
+| interface    | Theme, panels, graphs, visualisation and accessibility  |
+| telemetry    | Local metrics, logging and hardware observation         |
+| stewardship  | Permitted recommendations and approval boundaries       |
+
+For the initial configuration, I recommend:
+
+Execution policy: Offline by default, with explicitly authorised online operations.
+
+Evidence policy: Immutable original evidence, SHA-256 integrity checks, provenance records and traceable derived artefacts.
+
+Agent policy: Read-only investigation by default. SCA approval required for consequential operations.
+
+Model policy: No assumption that a model's confidence is equivalent to evidential certainty.
+
+CSI policy: Raw measurements and decoded measurements must remain distinguishable from inferred movement, occupancy or identity.
+
+### 3.3 `styles.css` design specification
+
+Use the three visual modes already established for your local interfaces, with an RPF-specific emphasis on analytical traceability.
+
+| Interface          | Visual treatment            | Primary purpose                           |
+| ------------------ | --------------------------- | ----------------------------------------- |
+| Investigation Home | Focused cards               | Claims, investigations, recent findings   |
+| RPF Graph          | Analytical graph            | Dependency and evidence relationships     |
+| Operator Inspector | Dense instrumentation       | Six recursive operator results            |
+| Evidence Explorer  | Analytical graph and tables | Provenance and contradictions             |
+| ReverseRPF         | Dependency tree             | Backward justification tracing            |
+| Experience Viewer  | Multimodal panels           | Audio, vision and contextual associations |
+| CSI Laboratory     | Dense instrumentation       | RF measurements and signal visualisation  |
+| Stewardship        | Focused cards               | Decisions, limitations and approvals      |
+
+The stylesheet should provide a consistent visual language while supporting multiple host interfaces.
+
+### Suggested colour system
+
+Dark Sovereign — RPF Investigation Theme
+
+Gold `#D4AF37` — Identity, navigation and selected controls
+
+Cyan `#00C8D7` — Live observations and measurements
+
+Violet `#A78BFA` — Interpretations and model-generated hypotheses
+
+Green `#22C55E` — Verified integrity checks and completed validations
+
+Amber `#F59E0B` — Uncertainty and unresolved dependencies
+
+Red `#EF4444` — Contradictions, failures and critical warnings
+
+Use near-black backgrounds, restrained gold borders and compact typography.
+
+Colour must not be the sole indicator of a claim's status. Every state needs a readable label.
+
+### Visual dependency graph
+
+The RPF graph should expose the full chain:
+
+```mermaid
+flowchart TD
+    A["Reality"] --> B["Observation"]
+    B --> C["Experience"]
+    C --> D["Understanding"]
+    D --> E["Language / Representation"]
+    E --> F["Knowledge"]
+    F --> G["Wisdom"]
+    G --> H["Stewardship"]
+```
+
+Each node should support inspection of evidence, assumptions, provenance, contradictions and unresolved questions.
+
+ForwardRPF and ReverseRPF should use the same underlying dependency graph, changing only the traversal direction and evaluation objective.
+
+### Task 04 — RF-CSI and ethical cybersecurity integration
+
+This is where the Pi 5 becomes particularly relevant.
+
+Your recent Nexmon work reported monitor mode activation on the Pi, but monitor mode alone does not prove CSI extraction is operational.
+
+The first engineering milestone is therefore to establish and verify a complete CSI acquisition pipeline.
+
+### Proposed signal-processing architecture
+
+```mermaid
+flowchart TD
+    A["Raspberry Pi 5"] --> B["Wi-Fi Monitor / CSI Acquisition"]
+    B --> C["Raw Capture and Integrity"]
+    C --> D["CSI Decoder"]
+    D --> E["Signal Processing"]
+    E --> F["RuView / Visualisation"]
+    E --> G["RPF Observation Adapter"]
+    G --> H["Claim and Evidence Evaluation"]
+    H --> I["SCA Controller"]
+    I --> J["PentestGPT Investigation"]
+    I --> K["T-Lab Evaluation"]
+```
+
+### Capability development
+
+| Capability                 | Required validation                                          |
+| -------------------------- | ------------------------------------------------------------ |
+| Wi-Fi monitor mode         | Verify interface, firmware and capture behaviour             |
+| CSI acquisition            | Confirm actual CSI measurements are produced                 |
+| CSI decoding               | Verify format compatibility and numerical output             |
+| RF visualisation           | Validate plots against recorded signal data                  |
+| Motion sensing             | Calibrate against controlled physical movement               |
+| Occupancy estimation       | Evaluate accuracy, false positives and environmental effects |
+| Security anomaly detection | Correlate observations with independently verified events    |
+| RPF evaluation             | Trace each conclusion to its supporting measurements         |
+
+A monitor-capable Pi can perform useful wireless security monitoring without CSI. CSI sensing adds a different capability and requires separate hardware, firmware and measurement validation.
+
+### PentestGPT integration
+
+PentestGPT should receive structured observations rather than unrestricted control of the Pi.
+
+For example, an authorised wireless assessment could produce a finding that unusual signal activity occurred during a test.
+
+RPF would then investigate:
+
+* What activity was observed?
+
+* How was it measured?
+
+* When did it occur?
+
+* Why might it have occurred?
+
+* Where was the observation made?
+
+* Who or what can legitimately be associated with it?
+
+The system should distinguish observed RF activity from claims about a device, person or attacker.
+
+### RuView integration
+
+RuView can be treated as a visualisation and signal-analysis integration candidate.
+
+Its output must not automatically become verified RPF knowledge.
+
+For example, a rendered human-shaped representation is not proof that a human was detected. Its evidential value depends on the underlying signal processing, calibration and independent validation.
+
+### Offline and online modes
+
+Offline mode
+
+Local capture, decoding, analysis, model inference, evidence storage and RPF evaluation.
+
+Online mode
+
+Explicitly authorised updates, external evidence retrieval, security intelligence and remote collaboration.
+
+Both modes should preserve the same evidence and permission boundaries.
+
+### Task 05 — Implementation and acceptance criteria
+
+I recommend the following development sequence.
+
+| Phase | Deliverable               | Acceptance criterion                                                 |
+| ----- | ------------------------- | -------------------------------------------------------------------- |
+| 01    | RPF core specification    | Stages, operators, claims and domains formally defined               |
+| 02    | Claim and evidence engine | Unsupported conclusions cannot silently pass validation              |
+| 03    | ReverseRPF engine         | Missing dependencies are identified and recorded                     |
+| 04    | Claude plugin             | Local skill discovery and invocation verified                        |
+| 05    | SCA adapter               | RPF executes without taking orchestration authority                  |
+| 06    | T-Lab adapter             | Model evaluations are accepted as attributed evidence                |
+| 07    | PentestGPT adapter        | Authorised security findings are evaluated through RPF               |
+| 08    | JSON/CSS interface        | Investigation graph and evidence inspector operational               |
+| 09    | Pi CSI adapter            | Actual hardware acquisition and decoding independently verified      |
+| 10    | Integration testing       | Reproducible evidence, permissions and failure handling demonstrated |
+
+### Required investigation artefacts
+
+Every completed RPF investigation should generate:
+
+* A claim record with a stable identifier.
+
+* An evidence manifest containing provenance and integrity information.
+
+* A dependency graph with supported and unsupported transitions.
+
+* A record of competing explanations, assumptions and contradictions.
+
+* A stewardship decision with its justification and limitations.
+
+### Final architectural recommendation
+
+Build RPF as a standalone local reasoning library first, then expose it as a Claude-compatible plugin and an SCA-controlled service.
+
+This provides three important properties:
+
+* Portability: RPF remains usable independently of Claude, SCA or any particular model.
+
+* Auditability: Claims, evidence and dependency transitions remain inspectable.
+
+* Sovereignty: Local infrastructure retains control of evidence, execution and permissions.
+
+The Raspberry Pi CSI implementation should be an observation adapter, not part of the RPF reasoning core.
+
+That separation will allow future observations from cameras, microphones, network telemetry, hardware sensors and other instruments without redesigning RPF.
+
+Status: These are five defined development tasks and a proposed architecture. No files have been written to your local projects, no Claude plugin has been installed, and no scheduled automation has been created.
+
+The next concrete deliverable is the complete Claude plugin package, including its actual `SKILL.md`, `SKILLS.md`, `custom.json`, `styles.css`, schemas and validation tests.

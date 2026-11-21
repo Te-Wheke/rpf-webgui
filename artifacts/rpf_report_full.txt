@@ -1,0 +1,135 @@
+                               RPF Investigation Desk
+                         Source Analysis and Integrity Review
+Prepared for: Grok development review | Date: 22 November 2026
+
+Scope: Static review of supplied workspace, focusing on the RPF engine, evidence admission, dependency enforcement,
+state transitions, and separation from SCA / T-Lab.
+
+Assessment: Functional deterministic prototype; core justification assurances are not yet fully enforced.
+
+
+1. Executive assessment
+The supplied TypeScript workspace implements an eight-stage RPF investigation model, proposition-level claim states,
+domain-sensitive evidence standards, six operators, forward evaluation, reverse audit targeting, seeded cases, and
+browser-based persistence. The engine is rule-based rather than a mere language-model narration. However, important
+rules depend on self-declared evidence metadata and do not establish source authenticity, universal relevance, or a
+complete chain of record-level dependencies.
+
+Central conclusion: The design expresses the principle 'No transition should occur unless justified by the dependencies
+beneath it,' but the inspected code does not fully enforce that principle. Do not present the prototype as a verified
+independent evidence authority.
+
+
+2. Source and review boundaries
+Primary source: grok-workspace.zip (SHA-256: 6f1b84911aae03958f40a62a64cc5e4b7e33bb1191443a77a30d6b629ebb9387). Inspected
+files include src/rpf/engine.ts, store.ts, types.ts, domains.ts, sha256.ts, and the test suite definition. This report is based
+on direct source inspection and previously reported engine-test outcomes; tests were not rerun during preparation of this
+PDF. No deployment, adversarial test, live CSI capture, or browser security audit is claimed.
+
+
+3. Case-level interpretation
+
+Case                       Declared status      What the case actually establishes
+
+
+CSI occupancy              PROPOSED             Monitor-mode capability is not CSI measurement, human occupancy, or through-wall
+                                                localization.
+
+
+Integer arithmetic         DEMONSTRATED         Demonstration is bounded to formal arithmetic; action remains separately gated.
+
+
+Tradition / prediction     UNRESOLVED           A tradition reading may be supported internally; prediction requires independent empirical
+                                                evidence.
+
+
+
+4. Findings and remediation priorities
+RPF-001 | HIGH | Evidence history is not immutable
+
+Evidence is persisted through browser localStorage (store.ts). The reviewed evidence update path can replace a matching
+identifier, so 'append-only' is not an enforceable storage property. Use an append-only event log with immutable IDs, explicit
+correction events, linked hashes, and independent verification.
+
+RPF-002 | HIGH | Evidence classifications are self-asserted
+
+EvidenceDraft accepts kind, standard, provenance, and optional integrity metadata. The evaluation logic can promote
+evidence labelled FACT when procedural fields meet rules, without independent authentication. Separate submitter
+assertions from verified admissions and require provenance verification appropriate to the domain.
+
+RPF-003 | HIGH | Relevance checks are narrow
+
+
+
+RPF | Grok source analysis | 22 Nov 2026                                                                                               Page 1
+bearsOn() explicitly rejects monitor-only evidence for unrelated cybersecurity propositions and tradition/authority for
+predictive astrological propositions; otherwise it returns true. Add explicit, independently reviewable proposition-to-evidence
+relevance decisions, with fail-closed defaults.
+
+RPF-004 | MEDIUM-HIGH | Cross-stage evidence dependencies are weak
+
+Experience readiness checks observer, timestamp and provenance, but does not universally bind an experience to the
+observation that supports the same proposition. Require typed dependency edges and enforce each stage against the
+specific preceding record.
+
+RPF-005 | HIGH | Stewardship can bypass a Wisdom check
+
+testStewardship() explicitly checks Knowledge and text fields, but does not explicitly require a justified Wisdom stage.
+Require all prerequisite stages, including Wisdom, and validate the substance of the proposed action and its constraints.
+
+RPF-006 | MEDIUM-HIGH | Hashing is not authentication
+
+SHA-256 provides a digest, not proof that a source or observation is genuine. Verify hashes against trusted records;
+preserve original bytes, trusted timestamps, signer identities where applicable, and a clear provenance chain.
+
+
+5. Architectural boundaries
+RPF: Investigation and justification assessment only. SCA: Authorised execution and orchestration. T-Lab: Model
+engineering, laboratory evaluation, and experimental artefact production. Data should cross these boundaries as
+characterised artefacts; neither an SCA result nor a T-Lab trace automatically becomes a verified observation. Synthetic CSI
+data must remain clearly identified and inadmissible as real-world measurement.
+
+
+6. Recommended integrity work package
+1. Implement immutable event-sourced evidence records, signed or otherwise independently anchored where warranted.
+
+2. Define evidence admission statuses distinct from FACT / INFERENCE / ASSUMPTION, with source authenticity and
+integrity checks.
+
+3. Replace permissive relevance fallback with explicit proposition-linked relevance decisions and reasons.
+
+4. Require record-level dependency edges across Reality, Observation, Experience, Understanding, Language, Knowledge,
+Wisdom, Stewardship.
+
+5. Gate Stewardship on every required stage, including Wisdom, and on domain-appropriate action validation.
+
+6. Add negative tests: forged provenance, unrelated FACT, record replacement, stage bypass, synthetic CSI promotion,
+conflicting evidence, and tampered exports.
+
+7. Publish a machine-readable decision trace: input record IDs, rule versions, reasons, gaps, contradictions, and export
+checksum.
+
+
+7. Verification criteria for Grok
+A corrective build should show: (a) original evidence remains retrievable after amendments; (b) unverifiable or irrelevant
+material cannot advance claims; (c) stage dependencies are explicit and traversable; (d) Wisdom cannot be bypassed
+before Stewardship; (e) exports can be independently validated; and (f) regression tests cover adversarial inputs, not only
+expected seed scenarios.
+
+
+8. Final disposition
+Disposition: INVESTIGATE / REMEDIATE, not operational certification. The prototype is suitable for continued
+controlled development. It is not yet justified to claim that its evidence ledger is immutable, that evidence authenticity is
+verified, or that every stage transition is dependency-safe. Preserve the non-executing RPF boundary and address integrity
+controls before extending integration or presentation claims.
+
+
+RPF | Grok source analysis | 22 Nov 2026                                                                                    Page 2
+Review limitation: Severity ratings are engineering prioritisation, not measured exploit likelihood. Findings identify source-level assurance gaps; they
+do not prove an actual compromise.
+
+
+
+
+RPF | Grok source analysis | 22 Nov 2026                                                                                                          Page 3
+

@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "RPF",
+      "hasCanvas": false,
+      "bodyTextLen": 1538,
+      "bodyTextHash": "8f1cf88dbc1bd25fa8b6744e96b834a637c34c8d1c42e1fb3351bb67d2c7d7be",
+      "bodyTextPrefix": "RPF Reality Propagation Framework Offline · local Proposed Home ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "RPF",
+      "hasCanvas": false,
+      "bodyTextLen": 1499,
+      "bodyTextHash": "4026d89ba947f52d68c34f3fa06eea9620cb20890455ed13f8a9fe7dc11c4dc2",
+      "bodyTextPrefix": "RPF Offline · local Home Status Graph Operators Evidence Reverse",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

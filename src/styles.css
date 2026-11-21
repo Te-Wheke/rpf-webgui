@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Sora:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-bg: #07080c;
+  --color-bg-raise: #0e1117;
+  --color-surface: #12161e;
+  --color-fg: #e7e4d8;
+  --color-muted: #b7b1a2;
+  --color-line: #2c281f;
+  --color-gold: #d4af37;
+  --color-on-gold: #14110a;
+  --color-cyan: #00c8d7;
+  --color-violet: #a78bfa;
+  --color-green: #22c55e;
+  --color-amber: #f59e0b;
+  --color-red: #ef4444;
+  --radius-panel: 0.75rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-gold) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-gold) 8%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@keyframes rpf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rpf-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rpf-spin 16s linear infinite;
+}
+
+.rpf-spin-rev {
+  animation-duration: 22s;
+  animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
